@@ -1,0 +1,33 @@
+# Arquivos e pastas geradas pelo Xcode
+build/
+DerivedData/
+
+# Arquivos de configuração específicos do usuário
+*.xcuserstate
+xcuserdata/
+
+# Arquivos de cache e temporários do macOS
+.DS_Store
+
+# Swift Package Manager
+/.build/
+Package.resolved
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/
+
+# Arquivos de playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+
+# Outros
+*.log
