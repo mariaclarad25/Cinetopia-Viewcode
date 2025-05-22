@@ -9,13 +9,40 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private lazy var label: UILabel = {
+    private lazy var logoImageView: UIImageView = {
+        let imageView = UIImageView(image: UIImage.logo)
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return imageView
+    }()
+    
+    private lazy var coupleImageView: UIImageView = {
+        let coupleImageView = UIImageView(image: UIImage.couple)
+        coupleImageView.translatesAutoresizingMaskIntoConstraints = false
+        
+        return coupleImageView
+    }()
+    
+    private lazy var welcomeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Hello, World!"
+        label.text = "O lugar ideal para buscar, salvar e organizar seus filmes favoritos!"
         label.textColor = .white
-        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        label.font = .systemFont(ofSize: 20, weight: .bold)
         return label
+    }()
+    
+    private lazy var welcomeButton: UIButton = {
+        let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Quero começar!", for: .normal)
+        button.backgroundColor = .buttonBackground
+        button.setTitleColor(.background, for: .normal)
+        button.titleLabel?.font = .boldSystemFont(ofSize: 20)
+        button.layer.cornerRadius = 32
+        return button
     }()
 
     override func viewDidLoad() {
@@ -27,17 +54,27 @@ class HomeViewController: UIViewController {
     }
     
     private func addSubviews(){
-        view.addSubview(label)
+        view.addSubview(logoImageView)
+        view.addSubview(coupleImageView)
+        view.addSubview(welcomeLabel)
+        view.addSubview(welcomeButton)
     }
     private func setupConstrains(){
         NSLayoutConstraint.activate([
-            label.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -16),
-            label.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -32)
-            //label.leadingAnchor.constraint(equalTo: view.leadingAnchor)
-            //label.centerXAnchor.constraint(equalTo: view.centerXAnchor)
-            //label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            logoImageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 64),
+            logoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            coupleImageView.topAnchor.constraint(equalTo: logoImageView.bottomAnchor, constant: 32),
+            coupleImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            
+            welcomeLabel.topAnchor.constraint(equalTo: coupleImageView.bottomAnchor, constant: 32),
+            welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 16),
+            welcomeLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -16),
+            
+            welcomeButton.topAnchor.constraint(equalTo: welcomeLabel.bottomAnchor, constant: 32),
+            welcomeButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 64),
+            welcomeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -64),
+            welcomeButton.heightAnchor.constraint(equalToConstant: 64)
         ])
     }
-    
 }
-
