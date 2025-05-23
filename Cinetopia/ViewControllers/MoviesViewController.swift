@@ -9,17 +9,13 @@ import UIKit
 
 class MoviesViewController: UIViewController{
     
-    var names: [String] = [
-    "Ana", "Giovanna", "Maria", "Lucas"
-    ]
-    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.backgroundColor = .clear
         tableView.dataSource = self
         tableView.delegate = self
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "nameCell")
+        tableView.register(MovieTableViewCell.self, forCellReuseIdentifier: "nameCell")
         return tableView
     }()
 
@@ -67,21 +63,24 @@ class MoviesViewController: UIViewController{
 }
 extension MoviesViewController: UITableViewDataSource, UITableViewDelegate{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return names.count
+        return movies.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
-        var configuration = cell.defaultContentConfiguration()
-        configuration.text = names[indexPath.row]
-        configuration.textProperties.color = .white
-        cell.contentConfiguration = configuration
-        cell.backgroundColor = .clear
-        
-        return cell
+        if let cell = tableView.dequeueReusableCell(withIdentifier: "nameCell", for: indexPath)
+            as? MovieTableViewCell{
+            cell.configureCell(movie: movies[indexPath.row])
+            cell.selectionStyle = .none
+            return cell
+        }
+        return UITableViewCell()
     }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
+        func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+            tableView.deselectRow(at: indexPath, animated: true)
+            let datailsVC = MovieDetailsViewController(movie: movies[indexPath.row])
+            navigationController?.pushViewController(datailsVC, animated: true)
+        }
+        func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+            return 160
+        }
     }
-}
