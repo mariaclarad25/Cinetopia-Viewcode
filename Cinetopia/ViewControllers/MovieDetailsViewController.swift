@@ -17,6 +17,7 @@ class MovieDetailsViewController: UIViewController {
         label.textColor = .white.withAlphaComponent(0.80)
         label.font = .systemFont(ofSize: 28, weight: .semibold)
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
     
@@ -93,7 +94,8 @@ class MovieDetailsViewController: UIViewController {
     private func setupConstrains(){
         NSLayoutConstraint.activate([
             titleMovieLabel.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
-            titleMovieLabel.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
+            titleMovieLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            titleMovieLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             
             movieImage.topAnchor.constraint(equalTo: titleMovieLabel.bottomAnchor, constant: 28),
             movieImage.centerXAnchor.constraint(equalTo: view.safeAreaLayoutGuide.centerXAnchor),
