@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import Kingfisher
 
 class MovieDetailsViewController: UIViewController {
     
@@ -27,6 +28,8 @@ class MovieDetailsViewController: UIViewController {
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 20
         image.layer.masksToBounds = true
+        let url = URL (string: movie.image)
+        image.kf.setImage(with: url)
         return image
     }()
     
@@ -61,7 +64,7 @@ class MovieDetailsViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = .background
         titleMovieLabel.text = movie.title
-        movieImage.image = UIImage(named: movie.image)
+        //movieImage.image = UIImage(named: movie.image)
         sinopseLabel.text = movie.synopsis
         addSubviews()
         setupConstrains()
