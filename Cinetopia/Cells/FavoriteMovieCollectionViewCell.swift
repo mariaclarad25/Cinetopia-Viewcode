@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol FavoriteMovieCollectionViewDelegate: AnyObject{
+    func didSelectedFavoriteButton (_ sender: UIButton)
+}
+
 class FavoriteMovieCollectionViewCell: UICollectionViewCell {
     
     
@@ -39,6 +43,8 @@ class FavoriteMovieCollectionViewCell: UICollectionViewCell {
         button.addTarget(self, action: #selector(didTapFvaoriteButton), for: .touchUpInside)
         return button
     }()
+    
+    weak var delegate: FavoriteMovieCollectionViewDelegate?
     
     //MARK: View life cycle
 
@@ -85,7 +91,7 @@ class FavoriteMovieCollectionViewCell: UICollectionViewCell {
     
     @objc
     func didTapFvaoriteButton(_ sender: UIButton){
-        print("did tap favorite button")
+        delegate?.didSelectedFavoriteButton(sender)
     }
 }
 

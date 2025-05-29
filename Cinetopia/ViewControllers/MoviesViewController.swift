@@ -45,6 +45,11 @@ class MoviesViewController: UIViewController{
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        tableView.reloadData()
+    }
+    
     private func fetchMovies() async{
         //Chamar função getMovies do MovieService quando ela estiver pronta
         do{
@@ -99,6 +104,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate{
             as? MovieTableViewCell{
             let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
             cell.configureCell(movie: movie)
+            cell.delegate = self
             cell.selectionStyle = .none
             return cell
         }
@@ -106,7 +112,7 @@ extension MoviesViewController: UITableViewDataSource, UITableViewDelegate{
     }
         func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
             tableView.deselectRow(at: indexPath, animated: true)
-            let movie = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
+            _ = isSearchActive ? filteredMovies[indexPath.row] : movies[indexPath.row]
             let datailsVC = MovieDetailsViewController(movie: movies[indexPath.row])
             navigationController?.pushViewController(datailsVC, animated: true)
         }
@@ -125,5 +131,22 @@ extension MoviesViewController: UISearchBarDelegate{
             })
         }
         tableView.reloadData()
+    }
+}
+
+extension MoviesViewController: MovieTableViewCellDelegate{
+    func didSelectedFavoriteButton(sender: UIButton) {
+        guard let cell = sender.superview?.superview as? MovieTableViewCell else{
+            return
+        }
+        guard let indexPath = tableView.indexPath(for: cell) else{
+            return
+        }
+        let selectedMovie = movies[indexPath.row]
+        selectedMovie.changeSelectionsStatus()
+        
+        MovieManager.shared.add(selectedMovie)
+        
+        tableView.reloadRows(at: [indexPath], with: .automatic)
     }
 }
